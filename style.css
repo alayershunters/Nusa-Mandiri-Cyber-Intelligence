@@ -32,57 +32,100 @@ body {
   flex-direction: column;
   min-height: 100vh;
   overflow-x: hidden; /* Mencegah scroll horizontal yang tidak diinginkan */
+  scroll-behavior: smooth; /* Animasi scroll halus */
 }
 
 .container {
   max-width: 1400px;
   margin: 0 auto;
-  padding: 0 20px;
+  padding: 0 20px; /* Padding horizontal untuk container */
   width: 100%;
 }
 
 /* -- Header -- */
 header {
-  background-color: var(--secondary-color);
-  color: white;
-  padding: 1.8em 0;
+  background-color: var(--card-background); /* Header Putih */
+  color: var(--secondary-color); /* Warna teks di header (hitam gelap) */
+  padding: 1.2em 0; /* Padding vertikal sedikit dikurangi untuk kerapian */
   text-align: center;
-  box-shadow: 0 3px 8px rgba(0, 0, 0, 0.25);
+  box-shadow: 0 3px 8px rgba(0, 0, 0, 0.1); /* Bayangan lebih halus */
   position: relative;
-  z-index: 10; /* Pastikan header di atas konten lain */
+  z-index: 10;
 }
 
-header h1 {
-  margin: 0;
-  font-size: 2.4em;
-  font-weight: 600;
-  letter-spacing: 0.05em;
+/* Menggunakan Flexbox untuk konten header agar logo dan teks sejajar */
+.header-content {
+  display: flex;
+  align-items: center; /* Pusatkan secara vertikal */
+  justify-content: center; /* Pusatkan secara horizontal di desktop */
+  gap: 20px; /* Jarak antara logo dan teks */
+  text-align: left; /* Teks di dalam header-text-container akan rata kiri */
+}
+
+.header-logo-container {
   display: flex;
   align-items: center;
   justify-content: center;
-  gap: 15px;
+  flex-shrink: 0; /* Pastikan logo tidak mengecil */
+}
+
+.header-logo {
+  max-width: 100px; /* Ukuran sedikit lebih besar untuk ikon di header putih */
+  height: auto;
+  display: block;
+  border-radius: 50%;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1); /* Efek bayangan ringan */
+  transition: transform 0.3s ease;
+}
+
+.header-logo:hover {
+  transform: scale(1.08);
+}
+
+.header-text-container {
+  flex-grow: 1;
+  text-align: left;
+}
+
+header h1 {
+  margin: 0; /* Hapus margin default H1 */
+  font-size: 2.2em; /* Sedikit lebih kecil agar muat */
+  font-weight: 700; /* Lebih tebal untuk kontras */
+  letter-spacing: 0.03em;
+  display: flex;
+  align-items: center;
+  gap: 12px; /* Jarak antara ikon dan teks H1 */
+  color: var(--secondary-color); /* Warna teks H1 */
 }
 
 header h1 i {
-  color: var(--primary-color);
-  font-size: 1.1em;
+  color: var(--primary-color); /* Ikon tetap warna biru */
+  font-size: 1.3em; /* Ukuran ikon H1 yang lebih besar */
+  transition: transform 0.3s ease;
+}
+
+header h1:hover i {
+  transform: rotate(10deg) scale(1.1);
 }
 
 header p {
-  margin-top: 0.7em;
-  font-size: 1.2em;
+  margin-top: 0.5em; /* Jarak antara H1 dan P */
+  font-size: 1em; /* Sedikit lebih kecil agar rapi */
   opacity: 0.85;
-  font-weight: 300;
+  font-weight: 400; /* Normal */
+  color: var(--light-text-color); /* Warna teks P */
 }
 
 /* -- Main Layout (Grid for Desktop) -- */
 main {
   flex-grow: 1;
   display: grid;
-  grid-template-columns: 350px 1fr; /* Sidebar lebih lebar, konten utama */
+  grid-template-columns: 350px 1fr; /* Sidebar fixed width, content flexible */
   gap: 30px;
-  padding: 30px 20px;
-  align-items: start; /* Pastikan kolom sejajar di bagian atas */
+  /* Ubah padding menjadi padding vertikal dan horizontal total */
+  padding: 30px 20px 30px 20px; /* Top, Right, Bottom, Left */
+  margin-top: 25px; /* <--- Jarak tambahan antara header dan main content */
+  align-items: start;
 }
 
 /* -- Sidebar (Aside) -- */
@@ -98,7 +141,9 @@ main {
   padding: 25px;
   border-radius: 10px;
   box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
-  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  transition: transform 0.3s ease, box-shadow 0.3s ease,
+    background-color 0.3s ease;
+  will-change: transform, box-shadow; /* Optimasi performa animasi */
 }
 
 .card:hover {
@@ -128,7 +173,7 @@ h3 {
   font-size: 1.3em;
   border-bottom: 1px dashed var(--border-color);
   padding-bottom: 0.6em;
-  margin-top: 1.5em; /* Jarak antara sub-judul */
+  margin-top: 1.5em;
 }
 
 /* -- Upload Section -- */
@@ -138,12 +183,14 @@ h3 {
 }
 
 input[type="file"] {
-  opacity: 0; /* Sembunyikan input asli */
+  opacity: 0;
   position: absolute;
   width: 100%;
   height: 100%;
   cursor: pointer;
   z-index: 1;
+  left: 0;
+  top: 0;
 }
 
 .custom-file-upload {
@@ -158,16 +205,16 @@ input[type="file"] {
   transition: background-color 0.3s ease, border-color 0.3s ease,
     color 0.3s ease;
   font-weight: 500;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
 }
 
 .custom-file-upload:hover {
   background-color: var(--primary-color);
   color: white;
   border-color: var(--secondary-color);
-}
-
-.custom-file-upload i {
-  margin-right: 8px;
 }
 
 .file-name-display {
@@ -181,6 +228,9 @@ input[type="file"] {
   padding: 8px;
   border-radius: 5px;
   border: 1px solid var(--code-border);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis; /* Menampilkan "..." jika nama file terlalu panjang */
 }
 
 button {
@@ -192,21 +242,25 @@ button {
   cursor: pointer;
   font-size: 1.1em;
   font-weight: 500;
-  transition: background-color 0.3s ease, transform 0.2s ease;
-  width: 100%; /* Tombol lebar penuh */
+  transition: background-color 0.3s ease, transform 0.2s ease,
+    box-shadow 0.3s ease;
+  width: 100%;
   display: flex;
   align-items: center;
   justify-content: center;
   gap: 10px;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
 }
 
 button:hover {
   background-color: #2980b9;
   transform: translateY(-2px);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
 }
 
 button:active {
   transform: translateY(0);
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
 }
 
 .status-message {
@@ -214,8 +268,11 @@ button:active {
   padding: 10px 15px;
   border-radius: 5px;
   font-weight: bold;
-  opacity: 0; /* Untuk animasi fade-in */
+  opacity: 0;
   transition: opacity 0.5s ease-out;
+  display: flex;
+  align-items: center;
+  gap: 8px;
 }
 
 .status-message.fade-in {
@@ -262,11 +319,19 @@ button:active {
   border-radius: 5px;
   background-color: #fdfdfd;
   font-size: 1em;
-  appearance: none; /* Hilangkan default arrow */
+  appearance: none;
   background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='%232c3e50'%3E%3Cpath d='M7 10l5 5 5-5z'/%3E%3C/svg%3E");
   background-repeat: no-repeat;
   background-position: right 10px center;
   background-size: 20px;
+  cursor: pointer;
+  transition: border-color 0.3s ease;
+}
+
+.filter-group select:focus {
+  outline: none;
+  border-color: var(--primary-color);
+  box-shadow: 0 0 0 2px rgba(52, 152, 219, 0.3);
 }
 
 /* -- Info Panel Section -- */
@@ -310,6 +375,18 @@ button:active {
   width: 35%;
 }
 
+/* Pre-formatted text within info panel (for JSON display) */
+#selected-node-info pre {
+  background-color: #f8f8f8;
+  border: 1px solid #ddd;
+  padding: 8px;
+  border-radius: 4px;
+  overflow-x: auto;
+  font-family: var(--font-monospace);
+  font-size: 0.8em;
+  max-height: 200px;
+}
+
 /* -- Legend Styling -- */
 #legend ul {
   list-style: none;
@@ -326,6 +403,7 @@ button:active {
   font-size: 0.85em;
   color: var(--light-text-color);
   white-space: nowrap;
+  padding: 2px 0;
 }
 
 .legend-color-box {
@@ -349,10 +427,10 @@ button:active {
 
 /* -- Visualization Section -- */
 #visualization-section {
-  min-height: 600px; /* Tinggi minimal yang lebih besar untuk grafik */
+  min-height: 600px;
   display: flex;
   flex-direction: column;
-  overflow: hidden; /* Penting untuk Cytoscape.js */
+  overflow: hidden;
 }
 
 #cy {
@@ -361,7 +439,8 @@ button:active {
   border: 1px solid var(--border-color);
   border-radius: 8px;
   background-color: #fcfcfc;
-  transition: opacity 0.5s ease-out; /* Animasi fade-in */
+  opacity: 0; /* Awalnya tersembunyi untuk fade-in */
+  transition: opacity 0.5s ease-out;
 }
 
 #cy.fade-in {
@@ -370,7 +449,7 @@ button:active {
 
 /* -- Analysis Report Section -- */
 #analysis-report {
-  margin-top: 25px; /* Jarak dari visualisasi */
+  margin-top: 25px;
 }
 
 .report-section {
@@ -426,38 +505,38 @@ button:active {
   box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.05);
 }
 
-.mitigation-list {
-  list-style: decimal;
-  padding-left: 25px;
-  margin-top: 15px;
-}
-
-.mitigation-list li {
-  margin-bottom: 8px;
-  color: var(--text-color);
-}
-
 /* -- Footer -- */
 footer {
+  background-color: var(--card-background); /* Footer Putih */
+  color: var(--secondary-color); /* Warna teks di footer (hitam gelap) */
   text-align: center;
-  padding: 1.5em 0;
-  background-color: var(--secondary-color);
-  color: rgba(255, 255, 255, 0.85);
-  font-size: 0.95em;
+  padding: 1em 0; /* Padding sedikit dikurangi */
+  font-size: 0.9em; /* Font sedikit lebih kecil */
   margin-top: 30px;
-  box-shadow: 0 -2px 8px rgba(0, 0, 0, 0.1);
+  box-shadow: 0 -3px 8px rgba(0, 0, 0, 0.1); /* Bayangan lebih halus */
+}
+
+footer p {
+  color: var(--light-text-color); /* Warna teks paragraf di footer */
+  margin: 0; /* Hapus margin default P */
 }
 
 footer i {
-  color: var(--primary-color);
+  color: var(--primary-color); /* Ikon tetap biru */
   margin-left: 5px;
+  transition: transform 0.3s ease;
 }
 
-/* -- Responsive Design (Mobile First Approach) -- */
+footer:hover i {
+  transform: rotate(15deg);
+}
+
+/* -- Responsive Design -- */
 @media (max-width: 1024px) {
   main {
     grid-template-columns: 1fr; /* Kolom tunggal di layar tablet/kecil */
     padding: 20px;
+    margin-top: 20px; /* Kurangi margin top di layar kecil */
   }
 
   #sidebar {
@@ -482,15 +561,41 @@ footer i {
   #visualization-section {
     min-height: 500px; /* Kurangi tinggi visualisasi di layar kecil */
   }
+
+  /* Penyesuaian header di tablet/mobile */
+  .header-content {
+    flex-direction: column; /* Ubah tata letak menjadi kolom */
+    gap: 10px;
+    text-align: center; /* Pusatkan teks */
+  }
+  .header-logo-container {
+    margin-bottom: 5px;
+  }
+  .header-text-container {
+    text-align: center; /* Pusatkan teks */
+  }
+  header h1 {
+    justify-content: center; /* Pusatkan ikon dan teks H1 */
+    font-size: 2em; /* Sesuaikan ukuran font */
+    gap: 8px; /* Jarak ikon lebih kecil */
+  }
+  header h1 i {
+    font-size: 1.2em; /* Ukuran ikon H1 lebih kecil di mobile */
+  }
+  header p {
+    font-size: 1em; /* Sesuaikan ukuran font */
+  }
+  .header-logo {
+    max-width: 60px; /* Ukuran lebih kecil di mobile */
+  }
 }
 
 @media (max-width: 768px) {
   header h1 {
-    font-size: 2em;
-    gap: 10px;
+    font-size: 1.8em;
   }
   header p {
-    font-size: 1em;
+    font-size: 0.9em;
   }
 
   main {
@@ -509,14 +614,18 @@ footer i {
   .custom-file-upload {
     padding: 10px 15px;
   }
+
+  .header-logo {
+    max-width: 50px; /* Ukuran lebih kecil lagi */
+  }
 }
 
 @media (max-width: 480px) {
   header h1 {
-    font-size: 1.8em;
+    font-size: 1.6em;
   }
   header p {
-    font-size: 0.9em;
+    font-size: 0.8em;
   }
   .container {
     padding: 0 10px;
