@@ -3,7 +3,7 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Intelijen Ancaman Cyber: Visualisasi & Analisis</title>
+    <title>NMCI: Visualisasi & Analisis Intelijen Ancaman</title>
     <link rel="stylesheet" href="style.css" />
     <link
       rel="stylesheet"
@@ -13,13 +13,18 @@
   </head>
   <body>
     <header>
-      <div class="container">
-        <h1>
-          <i class="fas fa-shield-alt"></i> Platform Intelijen Ancaman Siber
-        </h1>
-        <p>
-          Analisis Mendalam oleh Blue Team - Cyber Challenge ACAD CSIRT 2025 #3
-        </p>
+      <div class="container header-content">
+        <div class="header-logo-container">
+          <img
+            src="assets/img/logo-nmcc.jpg"
+            alt="Nusa Mandiri Cyber Community Logo"
+            class="header-logo"
+          />
+        </div>
+        <div class="header-text-container">
+          <h1><i class="fas fa-brain"></i> NMCI</h1>
+          <p>Nusa Mandiri Cyber Intelligence</p>
+        </div>
       </div>
     </header>
 
@@ -105,9 +110,9 @@
             <pre
               class="code-block"
             ><code># Menggunakan jq untuk mengekstrak Attack Patterns dan Kill Chain Phases:
-cat attack.json | jq '.objects[] | select(.type == "attack-pattern") | {"name": .name, "kill_chain_phases": [.kill_chain_phases[].phase_name]} '
+Get-Content attack.json | jq '.objects[] | select(.type == "attack-pattern") | {"name": .name, "kill_chain_phases": [.kill_chain_phases[].phase_name]} '
 # Untuk detail Initial Compromise:
-cat attack.json | jq '.objects[] | select(.id == "attack-pattern--3098c57b-d623-4c11-92f4-5905da66658b") | .description'
+Get-Content attack.json | jq '.objects[] | select(.id == "attack-pattern--3098c57b-d623-4c11-92f4-5905da66658b") | .description'
                     </code></pre>
             <p class="tool-info">
               <i class="fas fa-chart-bar"></i> **Output Hasil (Programmatic
@@ -127,12 +132,12 @@ cat attack.json | jq '.objects[] | select(.id == "attack-pattern--3098c57b-d623-
             </p>
             <p class="tool-info">
               <i class="fas fa-terminal"></i> **Tools/Command Line Digunakan
-              (Contoh):**
+              (Contoh)::**
             </p>
             <pre
               class="code-block"
             ><code># Menggunakan jq untuk mengekstrak Credential Exploitation Tools:
-cat attack.json | jq '.objects[] | select(.type == "tool" and (.tool_types[]? | contains("credential-exploitation"))) | .name'
+Get-Content attack.json | jq '.objects[] | select(.type == "tool" and (.tool_types[]? | contains("credential-exploitation"))) | .name'
                     </code></pre>
             <p class="tool-info">
               <i class="fas fa-chart-bar"></i> **Output Hasil (Programmatic
@@ -154,7 +159,7 @@ cat attack.json | jq '.objects[] | select(.type == "tool" and (.tool_types[]? | 
             <pre
               class="code-block"
             ><code># Menggunakan jq untuk mencari email Wang Dong:
-cat attack.json | jq '.objects[] | select(.type == "identity" and .name == "Wang Dong") | .contact_information'
+Get-Content attack.json | jq '.objects[] | select(.type == "identity" and .name == "Wang Dong") | .contact_information'
                     </code></pre>
             <p class="tool-info">
               <i class="fas fa-chart-bar"></i> **Output Hasil (Programmatic
@@ -173,7 +178,8 @@ cat attack.json | jq '.objects[] | select(.type == "identity" and .name == "Wang
             <pre
               class="code-block"
             ><code># Menggunakan jq untuk mencari FQDN .org:
-cat attack.json | jq '.objects[] | select(.type == "indicator" and (.pattern | type == "string") and (.pattern | contains(".org"))) | .pattern'
+Get-Content attack.json | jq '.objects[] | select(.type == "indicator" and (.pattern | type == "string") and (.pattern | contains(".org"))) | .pattern'
+
                     </code></pre>
             <p class="tool-info">
               <i class="fas fa-chart-bar"></i> **Output Hasil (Programmatic
@@ -188,8 +194,8 @@ cat attack.json | jq '.objects[] | select(.type == "indicator" and (.pattern | t
     <footer>
       <div class="container">
         <p>
-          &copy; 2025 NusaMandiriCyberCommunity
-          <i class="fas fa-code"></i> Dibuat oleh Tim Blue.
+          &copy; 2025 NMCI: Nusa Mandiri Cyber Intelligence.
+          <i class="fas fa-code"></i> NMCI
         </p>
       </div>
     </footer>
