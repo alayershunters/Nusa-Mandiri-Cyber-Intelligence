@@ -110,9 +110,9 @@
             <pre
               class="code-block"
             ><code># Menggunakan jq untuk mengekstrak Attack Patterns dan Kill Chain Phases:
-Get-Content attack.json | jq '.objects[] | select(.type == "attack-pattern") | {"name": .name, "kill_chain_phases": [.kill_chain_phases[].phase_name]} '
+cat attack.json | jq '.objects[] | select(.type == "attack-pattern") | {"name": .name, "kill_chain_phases": [.kill_chain_phases[].phase_name]} '
 # Untuk detail Initial Compromise:
-Get-Content attack.json | jq '.objects[] | select(.id == "attack-pattern--3098c57b-d623-4c11-92f4-5905da66658b") | .description'
+cat attack.json | jq '.objects[] | select(.id == "attack-pattern--3098c57b-d623-4c11-92f4-5905da66658b") | .description'
                     </code></pre>
             <p class="tool-info">
               <i class="fas fa-chart-bar"></i> **Output Hasil (Programmatic
@@ -132,12 +132,12 @@ Get-Content attack.json | jq '.objects[] | select(.id == "attack-pattern--3098c5
             </p>
             <p class="tool-info">
               <i class="fas fa-terminal"></i> **Tools/Command Line Digunakan
-              (Contoh)::**
+              (Contoh):**
             </p>
             <pre
               class="code-block"
             ><code># Menggunakan jq untuk mengekstrak Credential Exploitation Tools:
-Get-Content attack.json | jq '.objects[] | select(.type == "tool" and (.tool_types[]? | contains("credential-exploitation"))) | .name'
+cat attack.json | jq '.objects[] | select(.type == "tool" and (.tool_types[]? | contains("credential-exploitation"))) | .name'
                     </code></pre>
             <p class="tool-info">
               <i class="fas fa-chart-bar"></i> **Output Hasil (Programmatic
@@ -159,7 +159,7 @@ Get-Content attack.json | jq '.objects[] | select(.type == "tool" and (.tool_typ
             <pre
               class="code-block"
             ><code># Menggunakan jq untuk mencari email Wang Dong:
-Get-Content attack.json | jq '.objects[] | select(.type == "identity" and .name == "Wang Dong") | .contact_information'
+cat attack.json | jq '.objects[] | select(.type == "identity" and .name == "Wang Dong") | .contact_information'
                     </code></pre>
             <p class="tool-info">
               <i class="fas fa-chart-bar"></i> **Output Hasil (Programmatic
@@ -173,13 +173,12 @@ Get-Content attack.json | jq '.objects[] | select(.type == "identity" and .name 
             <ul id="fqdnIndicators"></ul>
             <p class="tool-info">
               <i class="fas fa-terminal"></i> **Tools/Command Line Digunakan
-              (Contoh):
+              (Contoh):**
             </p>
             <pre
               class="code-block"
             ><code># Menggunakan jq untuk mencari FQDN .org:
-Get-Content attack.json | jq '.objects[] | select(.type == "indicator" and (.pattern | type == "string") and (.pattern | contains(".org"))) | .pattern'
-
+cat attack.json | jq '.objects[] | select(.type == "indicator" and (.pattern | type == "string") and (.pattern | contains(".org"))) | .pattern'
                     </code></pre>
             <p class="tool-info">
               <i class="fas fa-chart-bar"></i> **Output Hasil (Programmatic
@@ -195,7 +194,7 @@ Get-Content attack.json | jq '.objects[] | select(.type == "indicator" and (.pat
       <div class="container">
         <p>
           &copy; 2025 NMCI: Nusa Mandiri Cyber Intelligence.
-          <i class="fas fa-code"></i> NMCI
+          <i class="fas fa-code"></i> Dibuat oleh Tim Blue.
         </p>
       </div>
     </footer>
