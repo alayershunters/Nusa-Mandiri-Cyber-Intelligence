@@ -1,0 +1,212 @@
+<!DOCTYPE html>
+<html lang="id">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Intelijen Ancaman Cyber: Visualisasi & Analisis</title>
+    <link rel="stylesheet" href="style.css" />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css"
+    />
+    <script src="lib/cytoscape.min.js"></script>
+  </head>
+  <body>
+    <header>
+      <div class="container">
+        <h1>
+          <i class="fas fa-shield-alt"></i> Platform Intelijen Ancaman Siber
+        </h1>
+        <p>
+          Analisis Mendalam oleh Blue Team - Cyber Challenge ACAD CSIRT 2025 #3
+        </p>
+      </div>
+    </header>
+
+    <main class="container">
+      <aside id="sidebar">
+        <section id="upload-section" class="card">
+          <h2><i class="fas fa-upload"></i> Unggah & Proses Data</h2>
+          <div class="file-input-wrapper">
+            <input type="file" id="fileInput" accept=".json, .txt" />
+            <label for="fileInput" class="custom-file-upload">
+              <i class="fas fa-folder-open"></i> Pilih File
+            </label>
+            <span id="fileNameDisplay" class="file-name-display"
+              >Belum ada file terpilih</span
+            >
+          </div>
+          <button onclick="processFile()">
+            <i class="fas fa-play-circle"></i> Mulai Analisis
+          </button>
+          <p id="uploadStatus" class="status-message fade-in"></p>
+        </section>
+
+        <section id="filter-section" class="card" style="display: none">
+          <h2><i class="fas fa-filter"></i> Filter Visualisasi</h2>
+          <div class="filter-group">
+            <label for="nodeTypeFilter"
+              ><i class="fas fa-circle-nodes"></i> Tipe Node:</label
+            >
+            <select id="nodeTypeFilter" onchange="applyFilter()"></select>
+          </div>
+          <div class="filter-group">
+            <label for="edgeTypeFilter"
+              ><i class="fas fa-project-diagram"></i> Tipe Edge:</label
+            >
+            <select id="edgeTypeFilter" onchange="applyFilter()"></select>
+          </div>
+          <button onclick="resetFilters()">
+            <i class="fas fa-sync-alt"></i> Reset Filter
+          </button>
+        </section>
+
+        <section id="info-panel" class="card" style="display: none">
+          <h2><i class="fas fa-info-circle"></i> Informasi Detail</h2>
+          <h3>Node Terpilih</h3>
+          <div id="selected-node-info" class="info-content">
+            <p>Klik pada node di grafik untuk melihat detailnya.</p>
+          </div>
+          <h3>Tautan Node</h3>
+          <div id="linked-nodes-info" class="info-content">
+            <h4>Incoming Edges:</h4>
+            <ul id="incoming-edges"></ul>
+            <h4>Outgoing Edges:</h4>
+            <ul id="outgoing-edges"></ul>
+          </div>
+          <h3>Legenda</h3>
+          <div id="legend" class="info-content"></div>
+        </section>
+      </aside>
+
+      <section id="content-area">
+        <section id="visualization-section" class="card" style="display: none">
+          <h2><i class="fas fa-network-wired"></i> Visualisasi Data Grafis</h2>
+          <div id="cy" class="fade-in"></div>
+        </section>
+
+        <section id="analysis-report" class="card" style="display: none">
+          <h2>
+            <i class="fas fa-file-alt"></i> Laporan Analisis Awal (Attack.json)
+          </h2>
+
+          <div class="report-section">
+            <h3>1. Pola Serangan (Attack Patterns) & Fase Kill Chain</h3>
+            <div id="attackPatternOutput"></div>
+            <p>
+              Pada pola serangan "Initial Compromise", teknik yang paling banyak
+              digunakan adalah:
+              <strong id="initialCompromiseTechnique"></strong>.
+            </p>
+            <p class="tool-info">
+              <i class="fas fa-terminal"></i> **Tools/Command Line Digunakan
+              (Contoh):**
+            </p>
+            <pre
+              class="code-block"
+            ><code># Menggunakan jq untuk mengekstrak Attack Patterns dan Kill Chain Phases:
+cat attack.json | jq '.objects[] | select(.type == "attack-pattern") | {"name": .name, "kill_chain_phases": [.kill_chain_phases[].phase_name]} '
+# Untuk detail Initial Compromise:
+cat attack.json | jq '.objects[] | select(.id == "attack-pattern--3098c57b-d623-4c11-92f4-5905da66658b") | .description'
+                    </code></pre>
+            <p class="tool-info">
+              <i class="fas fa-chart-bar"></i> **Output Hasil (Programmatic
+              Extraction):**
+            </p>
+            <pre id="attackPatternRawOutput" class="output-box"></pre>
+          </div>
+
+          <div class="report-section">
+            <h3>
+              2. Alat Eksploitasi Kredensial (Credential Exploitation Tools)
+            </h3>
+            <ul id="credentialExploitationTools"></ul>
+            <p>
+              Total alat yang digunakan:
+              <strong id="totalCredentialTools"></strong>.
+            </p>
+            <p class="tool-info">
+              <i class="fas fa-terminal"></i> **Tools/Command Line Digunakan
+              (Contoh):**
+            </p>
+            <pre
+              class="code-block"
+            ><code># Menggunakan jq untuk mengekstrak Credential Exploitation Tools:
+cat attack.json | jq '.objects[] | select(.type == "tool" and (.tool_types[]? | contains("credential-exploitation"))) | .name'
+                    </code></pre>
+            <p class="tool-info">
+              <i class="fas fa-chart-bar"></i> **Output Hasil (Programmatic
+              Extraction):
+            </p>
+            <pre id="credentialToolsRawOutput" class="output-box"></pre>
+          </div>
+
+          <div class="report-section">
+            <h3>3. Alamat Email Identitas "Wang Dong"</h3>
+            <p>
+              Alamat email yang terkait dengan identitas "Wang Dong" adalah:
+              <strong id="wangDongEmail"></strong>.
+            </p>
+            <p class="tool-info">
+              <i class="fas fa-terminal"></i> **Tools/Command Line Digunakan
+              (Contoh):**
+            </p>
+            <pre
+              class="code-block"
+            ><code># Menggunakan jq untuk mencari email Wang Dong:
+cat attack.json | jq '.objects[] | select(.type == "identity" and .name == "Wang Dong") | .contact_information'
+                    </code></pre>
+            <p class="tool-info">
+              <i class="fas fa-chart-bar"></i> **Output Hasil (Programmatic
+              Extraction):
+            </p>
+            <pre id="wangDongEmailRawOutput" class="output-box"></pre>
+          </div>
+
+          <div class="report-section">
+            <h3>4. Indikator FQDN (.org)</h3>
+            <ul id="fqdnIndicators"></ul>
+            <p class="tool-info">
+              <i class="fas fa-terminal"></i> **Tools/Command Line Digunakan
+              (Contoh):
+            </p>
+            <pre
+              class="code-block"
+            ><code># Menggunakan jq untuk mencari FQDN .org:
+cat attack.json | jq '.objects[] | select(.type == "indicator" and (.pattern | type == "string") and (.pattern | contains(".org"))) | .pattern'
+                    </code></pre>
+            <p class="tool-info">
+              <i class="fas fa-chart-bar"></i> **Output Hasil (Programmatic
+              Extraction):
+            </p>
+            <pre id="fqdnIndicatorsRawOutput" class="output-box"></pre>
+          </div>
+        </section>
+      </section>
+    </main>
+
+    <footer>
+      <div class="container">
+        <p>
+          &copy; 2025 NusaMandiriCyberCommunity
+          <i class="fas fa-code"></i> Dibuat oleh Tim Blue.
+        </p>
+      </div>
+    </footer>
+
+    <script src="script.js"></script>
+    <script>
+      // Memperbarui nama file yang dipilih secara visual
+      document
+        .getElementById("fileInput")
+        .addEventListener("change", function () {
+          const fileNameDisplay = document.getElementById("fileNameDisplay");
+          if (this.files && this.files.length > 0) {
+            fileNameDisplay.textContent = this.files[0].name;
+          } else {
+            fileNameDisplay.textContent = "Belum ada file terpilih";
+          }
+        });
+    </script>
+  </body>
+</html>

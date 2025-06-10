@@ -1,0 +1,541 @@
+/* -- Variabel Warna dan Font -- */
+:root {
+  --primary-color: #3498db; /* Biru terang */
+  --secondary-color: #2c3e50; /* Biru gelap kehitaman */
+  --accent-color: #e74c3c; /* Merah */
+  --background-color: #f4f7f6; /* Abu-abu terang */
+  --card-background: #ffffff; /* Putih */
+  --border-color: #e0e0e0; /* Abu-abu perbatasan */
+  --text-color: #333; /* Hitam gelap */
+  --light-text-color: #777; /* Abu-abu teks */
+  --code-background: #ecf0f1; /* Abu-abu kode */
+  --code-border: #bdc3c7; /* Abu-abu border kode */
+  --hover-light: rgba(52, 152, 219, 0.1); /* Efek hover ringan */
+
+  --font-primary: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+  --font-monospace: "Consolas", "Courier New", monospace;
+}
+
+/* -- Reset & Global Styles -- */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: var(--font-primary);
+  line-height: 1.6;
+  background-color: var(--background-color);
+  color: var(--text-color);
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+  overflow-x: hidden; /* Mencegah scroll horizontal yang tidak diinginkan */
+}
+
+.container {
+  max-width: 1400px;
+  margin: 0 auto;
+  padding: 0 20px;
+  width: 100%;
+}
+
+/* -- Header -- */
+header {
+  background-color: var(--secondary-color);
+  color: white;
+  padding: 1.8em 0;
+  text-align: center;
+  box-shadow: 0 3px 8px rgba(0, 0, 0, 0.25);
+  position: relative;
+  z-index: 10; /* Pastikan header di atas konten lain */
+}
+
+header h1 {
+  margin: 0;
+  font-size: 2.4em;
+  font-weight: 600;
+  letter-spacing: 0.05em;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 15px;
+}
+
+header h1 i {
+  color: var(--primary-color);
+  font-size: 1.1em;
+}
+
+header p {
+  margin-top: 0.7em;
+  font-size: 1.2em;
+  opacity: 0.85;
+  font-weight: 300;
+}
+
+/* -- Main Layout (Grid for Desktop) -- */
+main {
+  flex-grow: 1;
+  display: grid;
+  grid-template-columns: 350px 1fr; /* Sidebar lebih lebar, konten utama */
+  gap: 30px;
+  padding: 30px 20px;
+  align-items: start; /* Pastikan kolom sejajar di bagian atas */
+}
+
+/* -- Sidebar (Aside) -- */
+#sidebar {
+  display: flex;
+  flex-direction: column;
+  gap: 25px; /* Jarak antar card di sidebar */
+}
+
+/* -- Card Styles -- */
+.card {
+  background-color: var(--card-background);
+  padding: 25px;
+  border-radius: 10px;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.card:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
+}
+
+h2,
+h3 {
+  color: var(--secondary-color);
+  border-bottom: 2px solid var(--primary-color);
+  padding-bottom: 0.8em;
+  margin-bottom: 1.2em;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-weight: 600;
+}
+
+h2 i,
+h3 i {
+  color: var(--primary-color);
+  font-size: 1.1em;
+}
+
+h3 {
+  font-size: 1.3em;
+  border-bottom: 1px dashed var(--border-color);
+  padding-bottom: 0.6em;
+  margin-top: 1.5em; /* Jarak antara sub-judul */
+}
+
+/* -- Upload Section -- */
+.file-input-wrapper {
+  position: relative;
+  margin-bottom: 15px;
+}
+
+input[type="file"] {
+  opacity: 0; /* Sembunyikan input asli */
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  cursor: pointer;
+  z-index: 1;
+}
+
+.custom-file-upload {
+  display: block;
+  background-color: #f0f0f0;
+  color: var(--secondary-color);
+  padding: 12px 20px;
+  border: 2px dashed var(--primary-color);
+  border-radius: 8px;
+  text-align: center;
+  cursor: pointer;
+  transition: background-color 0.3s ease, border-color 0.3s ease,
+    color 0.3s ease;
+  font-weight: 500;
+}
+
+.custom-file-upload:hover {
+  background-color: var(--primary-color);
+  color: white;
+  border-color: var(--secondary-color);
+}
+
+.custom-file-upload i {
+  margin-right: 8px;
+}
+
+.file-name-display {
+  display: block;
+  margin-top: 10px;
+  font-size: 0.9em;
+  color: var(--light-text-color);
+  text-align: center;
+  font-style: italic;
+  background-color: var(--code-background);
+  padding: 8px;
+  border-radius: 5px;
+  border: 1px solid var(--code-border);
+}
+
+button {
+  background-color: var(--primary-color);
+  color: white;
+  padding: 12px 25px;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  font-size: 1.1em;
+  font-weight: 500;
+  transition: background-color 0.3s ease, transform 0.2s ease;
+  width: 100%; /* Tombol lebar penuh */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+}
+
+button:hover {
+  background-color: #2980b9;
+  transform: translateY(-2px);
+}
+
+button:active {
+  transform: translateY(0);
+}
+
+.status-message {
+  margin-top: 15px;
+  padding: 10px 15px;
+  border-radius: 5px;
+  font-weight: bold;
+  opacity: 0; /* Untuk animasi fade-in */
+  transition: opacity 0.5s ease-out;
+}
+
+.status-message.fade-in {
+  opacity: 1;
+}
+
+.status-message.success {
+  background-color: #e6ffe6;
+  color: #28a745;
+  border: 1px solid #28a745;
+}
+
+.status-message.error {
+  background-color: #ffe6e6;
+  color: var(--accent-color);
+  border: 1px solid var(--accent-color);
+}
+
+.status-message.warning {
+  background-color: #fff9e6;
+  color: orange;
+  border: 1px solid orange;
+}
+
+/* -- Filter Section -- */
+.filter-group {
+  margin-bottom: 20px;
+}
+
+.filter-group label {
+  display: block;
+  margin-bottom: 8px;
+  font-weight: 600;
+  color: var(--secondary-color);
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.filter-group select {
+  width: 100%;
+  padding: 10px;
+  border: 1px solid var(--border-color);
+  border-radius: 5px;
+  background-color: #fdfdfd;
+  font-size: 1em;
+  appearance: none; /* Hilangkan default arrow */
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='%232c3e50'%3E%3Cpath d='M7 10l5 5 5-5z'/%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: right 10px center;
+  background-size: 20px;
+}
+
+/* -- Info Panel Section -- */
+.info-content {
+  margin-bottom: 1em;
+  padding-bottom: 0.5em;
+  border-bottom: 1px solid var(--border-color);
+}
+
+.info-content:last-child {
+  border-bottom: none;
+  margin-bottom: 0;
+}
+
+.info-content ul {
+  list-style: none;
+  padding: 0;
+  font-size: 0.95em;
+}
+
+.info-content li {
+  margin-bottom: 0.4em;
+  word-wrap: break-word;
+  color: var(--light-text-color);
+}
+
+#selected-node-info table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 0.9em;
+}
+
+#selected-node-info td {
+  padding: 5px 0;
+  vertical-align: top;
+}
+
+#selected-node-info td.info-key {
+  font-weight: 600;
+  color: var(--secondary-color);
+  width: 35%;
+}
+
+/* -- Legend Styling -- */
+#legend ul {
+  list-style: none;
+  padding: 0;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+  margin-top: 15px;
+}
+
+#legend li {
+  display: flex;
+  align-items: center;
+  font-size: 0.85em;
+  color: var(--light-text-color);
+  white-space: nowrap;
+}
+
+.legend-color-box {
+  width: 16px;
+  height: 16px;
+  border-radius: 50%;
+  margin-right: 7px;
+  display: inline-block;
+  border: 1px solid rgba(0, 0, 0, 0.1);
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+}
+
+.legend-line {
+  width: 25px;
+  height: 2px;
+  margin-right: 7px;
+  display: inline-block;
+  vertical-align: middle;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+}
+
+/* -- Visualization Section -- */
+#visualization-section {
+  min-height: 600px; /* Tinggi minimal yang lebih besar untuk grafik */
+  display: flex;
+  flex-direction: column;
+  overflow: hidden; /* Penting untuk Cytoscape.js */
+}
+
+#cy {
+  flex-grow: 1;
+  width: 100%;
+  border: 1px solid var(--border-color);
+  border-radius: 8px;
+  background-color: #fcfcfc;
+  transition: opacity 0.5s ease-out; /* Animasi fade-in */
+}
+
+#cy.fade-in {
+  opacity: 1;
+}
+
+/* -- Analysis Report Section -- */
+#analysis-report {
+  margin-top: 25px; /* Jarak dari visualisasi */
+}
+
+.report-section {
+  margin-bottom: 30px;
+  padding-bottom: 20px;
+  border-bottom: 1px solid #eee;
+}
+
+.report-section:last-child {
+  border-bottom: none;
+  margin-bottom: 0;
+}
+
+.tool-info {
+  font-size: 0.9em;
+  color: var(--light-text-color);
+  margin-top: 1.5em;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-weight: 500;
+}
+
+.code-block {
+  background-color: var(--code-background);
+  border: 1px solid var(--code-border);
+  padding: 18px;
+  border-radius: 8px;
+  overflow-x: auto;
+  font-family: var(--font-monospace);
+  font-size: 0.87em;
+  color: var(--secondary-color);
+  white-space: pre-wrap;
+  word-break: break-all;
+  line-height: 1.4;
+  box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.05);
+}
+
+.output-box {
+  background-color: #ecf0f1;
+  border: 1px solid #bdc3c7;
+  padding: 18px;
+  border-radius: 8px;
+  overflow-x: auto;
+  font-family: var(--font-monospace);
+  font-size: 0.87em;
+  color: var(--secondary-color);
+  min-height: 60px;
+  max-height: 250px;
+  white-space: pre-wrap;
+  word-break: break-all;
+  line-height: 1.4;
+  box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.05);
+}
+
+.mitigation-list {
+  list-style: decimal;
+  padding-left: 25px;
+  margin-top: 15px;
+}
+
+.mitigation-list li {
+  margin-bottom: 8px;
+  color: var(--text-color);
+}
+
+/* -- Footer -- */
+footer {
+  text-align: center;
+  padding: 1.5em 0;
+  background-color: var(--secondary-color);
+  color: rgba(255, 255, 255, 0.85);
+  font-size: 0.95em;
+  margin-top: 30px;
+  box-shadow: 0 -2px 8px rgba(0, 0, 0, 0.1);
+}
+
+footer i {
+  color: var(--primary-color);
+  margin-left: 5px;
+}
+
+/* -- Responsive Design (Mobile First Approach) -- */
+@media (max-width: 1024px) {
+  main {
+    grid-template-columns: 1fr; /* Kolom tunggal di layar tablet/kecil */
+    padding: 20px;
+  }
+
+  #sidebar {
+    order: 2; /* Pindahkan sidebar ke bawah konten utama */
+  }
+
+  #content-area {
+    order: 1;
+  }
+
+  .card {
+    padding: 20px;
+  }
+
+  h2 {
+    font-size: 1.4em;
+  }
+  h3 {
+    font-size: 1.2em;
+  }
+
+  #visualization-section {
+    min-height: 500px; /* Kurangi tinggi visualisasi di layar kecil */
+  }
+}
+
+@media (max-width: 768px) {
+  header h1 {
+    font-size: 2em;
+    gap: 10px;
+  }
+  header p {
+    font-size: 1em;
+  }
+
+  main {
+    padding: 15px;
+    gap: 20px;
+  }
+
+  .card {
+    padding: 18px;
+  }
+
+  button {
+    padding: 10px 20px;
+    font-size: 1em;
+  }
+  .custom-file-upload {
+    padding: 10px 15px;
+  }
+}
+
+@media (max-width: 480px) {
+  header h1 {
+    font-size: 1.8em;
+  }
+  header p {
+    font-size: 0.9em;
+  }
+  .container {
+    padding: 0 10px;
+  }
+  .card {
+    padding: 15px;
+    border-radius: 8px;
+  }
+  h2 {
+    font-size: 1.2em;
+    gap: 8px;
+  }
+  h3 {
+    font-size: 1em;
+    gap: 8px;
+  }
+  .code-block,
+  .output-box {
+    padding: 12px;
+    font-size: 0.8em;
+  }
+}
